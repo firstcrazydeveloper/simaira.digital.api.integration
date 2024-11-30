@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{971EC210-2F7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simaira.Digital.API.Integration", "src\Simaira.Digital.API.Integration\Simaira.Digital.API.Integration.csproj", "{15D21236-A587-432F-9A81-5A17A41B95C0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simaira.Digital.Systems.API.IntegrationTests", "src\Simaira.Digital.Systems.API.IntegrationTests\Simaira.Digital.Systems.API.IntegrationTests.csproj", "{C50698FB-552B-4D39-80A1-2B5B191035E1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,17 +17,12 @@ Global
 		{15D21236-A587-432F-9A81-5A17A41B95C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15D21236-A587-432F-9A81-5A17A41B95C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15D21236-A587-432F-9A81-5A17A41B95C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C50698FB-552B-4D39-80A1-2B5B191035E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C50698FB-552B-4D39-80A1-2B5B191035E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C50698FB-552B-4D39-80A1-2B5B191035E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C50698FB-552B-4D39-80A1-2B5B191035E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{15D21236-A587-432F-9A81-5A17A41B95C0} = {971EC210-2F78-4D33-AA5B-8B356DCB5E43}
-		{C50698FB-552B-4D39-80A1-2B5B191035E1} = {971EC210-2F78-4D33-AA5B-8B356DCB5E43}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {35316A8D-2DA2-4859-976A-A5EB3CD07C2B}
