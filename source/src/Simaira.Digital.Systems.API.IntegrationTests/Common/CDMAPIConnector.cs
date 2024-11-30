@@ -9,10 +9,10 @@
     public class CDMAPIConnector : BaseTokenHandler, ICDMAPIConnector
     {
         private readonly HttpClient _httpClient;
-        private const string CdmClientId = "f05de03f-61da-4095-927c-b069737f045c";
-        private const string CdmClientSecret = "46z7Q~926cDzueRAquFvTD2IkGM1OJmQO8S5J";
-        private const string CdmTenantId = "c1eb5112-7946-4c9d-bc57-40040cfe3a91";
-        private const string CdmClientSecretScope = "api://761efe8d-1b2b-4ead-8414-fd5c3a2d7ae2/.default";
+        private const string CdmClientId = "";
+        private const string CdmClientSecret = "";
+        private const string CdmTenantId = "";
+        private const string CdmClientSecretScope = "";
 
         public CDMAPIConnector(HttpClient httpClient)
             : base()
