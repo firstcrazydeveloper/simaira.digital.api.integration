@@ -1,0 +1,8 @@
+﻿{
+  "customerPortalClientId": "761efe8d-1b2b-4ead-8414-fd5c3a2d7ae2",
+  "customerPortalClientSecret": "46z7Q~926cDzueRAquFvTD2IkGM1OJmQO8S5J",
+  "customerPortalTenantId": "c1eb5112-7946-4c9d-bc57-40040cfe3a91",
+  "customerPortalClientSecretScope": "api://761efe8d-1b2b-4ead-8414-fd5c3a2d7ae2/.default",
+  "appInsightInstrumentationKey": "2a7412a1-b3c2-4760-b93b-c05778162754",
+  "cosmosEndpoint": "AccountEndpoint=https://ins-e3d-cosmos-001-d.documents.azure.com:443/;AccountKey=1md07kVasYXIJu9ALsIMS9ZhUzsan8Xltwl7d8DjKAXUuie5tKmz5HQhN02PmU8Z4EFkoL13R5e4pBoJRblZVg==;"
+}
