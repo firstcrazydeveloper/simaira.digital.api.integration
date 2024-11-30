@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Simaira.Digital.API.Integration.Common.Files;
+using System;
 
 namespace Simaira.Digital.API.Integration.Configuration
 {

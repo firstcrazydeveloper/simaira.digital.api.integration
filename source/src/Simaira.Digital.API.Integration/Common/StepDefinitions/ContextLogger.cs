@@ -2,6 +2,9 @@
 using Newtonsoft.Json;
 using Simaira.Digital.API.Integration.Configuration;
 using Simaira.Digital.API.Integration.TestsResponse;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 namespace Simaira.Digital.API.Integration.Common.StepDefinitions

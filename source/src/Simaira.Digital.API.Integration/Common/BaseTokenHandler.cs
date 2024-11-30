@@ -1,4 +1,7 @@
 ﻿using Microsoft.Identity.Client;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Simaira.Digital.API.Integration.Common
 {
