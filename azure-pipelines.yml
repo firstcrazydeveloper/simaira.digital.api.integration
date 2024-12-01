@@ -33,10 +33,9 @@ steps:
 # 2. Prepare the SonarQube analysis
 - script: |
     dotnet tool install --global dotnet-sonarscanner
-    dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.12    
   displayName: 'Install dotnet Sonar Scanner & Report Generator'
 
-- script: dotnet sonarscanner begin -o:"$(SONAR_ORG_KEY)" -k:"$(SONAR_PROJECT_KEY)" -n:"simaira.digital.api.integration" -d:sonar.host.url="$(SONAR_URL)" -d:sonar.coverageReportPaths="coverage/SonarQube.xml"  -d:sonar.token="$(SONAR_TOKEN)"
+- script: dotnet sonarscanner begin -o:"$(SONAR_ORG_KEY)" -k:"$(SONAR_PROJECT_KEY)" -n:"simaira.digital.api.integration" -d:sonar.host.url="$(SONAR_URL)" -d:sonar.token="$(SONAR_TOKEN)"
   displayName: 'dotnet Sonar Scanner Begin'
   
 # 3. Build the project
