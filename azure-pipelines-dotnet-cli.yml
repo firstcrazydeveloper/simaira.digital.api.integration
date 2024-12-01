@@ -5,13 +5,7 @@ pool:
 
 variables:
 - group: Simaira.Digital.API.Integration #https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=azure-pipelines-ui%2Cyaml
-  SONAR_PROJECT_KEY: 'abhishekjob_simaira.digital.api.integration'
-  SONAR_ORG_KEY: 'abhishekjob'  # Required only for SonarCloud
-  SONAR_URL: 'https://sonarcloud.io'       # Or your SonarQube server URL
-  SONAR_TOKEN:  $(SONAR_TOKEN)          # Store the token in a secure DevOps variable
-
-
-
+ 
 steps:
 # Step 1: Install .NET SDK
 - checkout: self
