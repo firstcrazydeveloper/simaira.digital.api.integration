@@ -8,22 +8,37 @@ variables:
   SONAR_PROJECT_KEY: 'abhishekjob_simaira.digital.api.integration'
   SONAR_ORG_KEY: 'abhishekjob'  # Required only for SonarCloud
   SONAR_URL: 'https://sonarcloud.io'       # Or your SonarQube server URL
-  SONAR_TOKEN: $(fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e)           # Store the token in a secure DevOps variable
+  SONAR_TOKEN: 'fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e'           # Store the token in a secure DevOps variable
+
+
 
 steps:
-# 1. Install dotnet-sonarscanner if not pre-installed
+# Step 1: Install .NET SDK
+- checkout: self
+  fetchDepth: 0
 - task: UseDotNet@2
+  displayName: 'Install Dotnet'
   inputs:
-    packageType: 'global'
-  displayName: 'Install dotnet-sonarscanner'
+    packageType: 'sdk'
+    version: '8.x'  # Adjust to your .NET version
+
+# Step 2: Restore NuGet packages
+- task: DotNetCoreCLI@2
+  displayName: 'Restore Project'
+  inputs:
+    command: 'restore'
+    projects: '**/*.sln'
+
 
 # 2. Prepare the SonarQube analysis
 - script: |
     dotnet tool install --global dotnet-sonarscanner
-    dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.12
-    dotnet sonarscanner begin /k:"$(SONAR_PROJECT_KEY)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.token="$(SONAR_TOKEN)" /o:"$(SONAR_ORG_KEY) /-d:sonar.coverageReportPaths="coverage/SonarQube.xml"
-  displayName: 'Run SonarScanner Begin'
+    dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.12    
+  displayName: 'Install dotnet Sonar Scanner & Report Generator'
 
+- script: dotnet sonarscanner begin -o:"$(SONAR_ORG_KEY)" -k:"$(SONAR_PROJECT_KEY)" -n:"simaira.digital.api.integration" -d:sonar.host.url="S$(ONAR_URL)" -d:sonar.coverageReportPaths="coverage/SonarQube.xml"  -d:sonar.token="$(SONAR_TOKEN)"
+  displayName: 'dotnet Sonar Scanner Begin'
+  
 # 3. Build the project
 - task: DotNetCoreCLI@2
   inputs:
