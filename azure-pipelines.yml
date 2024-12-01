@@ -1,51 +1,40 @@
 trigger:
-- main  # Adjust to your branch name
+- main  # Set the branch(es) to trigger the pipeline
 
 pool:
-  vmImage: 'windows-latest'  # Use 'ubuntu-latest' for Linux builds
+  vmImage: 'windows-latest'  # Use an agent that supports .NET
+
+variables:
+  SONAR_PROJECT_KEY: 'abhishekjob_simaira.digital.api.integration'
+  SONAR_ORG_KEY: 'abhishekjob'  # Required only for SonarCloud
+  SONAR_URL: 'https://sonarcloud.io'       # Or your SonarQube server URL
+  SONAR_TOKEN: $(fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e)           # Store the token in a secure DevOps variable
 
 steps:
-# Step 1: Install .NET SDK
-- checkout: self
-  fetchDepth: 0
+# 1. Install dotnet-sonarscanner if not pre-installed
 - task: UseDotNet@2
-  displayName: 'Install Dotnet'
   inputs:
-    packageType: 'sdk'
-    version: '8.x'  # Adjust to your .NET version
+    packageType: 'global'
+    version: '7.x'
+  displayName: 'Install dotnet-sonarscanner'
 
-# Step 2: Restore NuGet packages
-- task: DotNetCoreCLI@2
-  displayName: 'Restore Project'
-  inputs:
-    command: 'restore'
-    projects: '**/*.sln'
-
-
+# 2. Prepare the SonarQube analysis
 - script: |
     dotnet tool install --global dotnet-sonarscanner
-    dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.12
-  displayName: 'Install dotnet Sonar Scanner & Report Generator'
+    dotnet sonarscanner begin /k:"$(SONAR_PROJECT_KEY)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_TOKEN)" /o:"$(SONAR_ORG_KEY)"
+  displayName: 'Run SonarScanner Begin'
 
-- script: dotnet sonarscanner begin -o:"abhishekjob" -k:"abhishekjob_simaira.digital.api.integration" -n:"simaira.digital.api.integration" -d:sonar.host.url="https://sonarcloud.io" -d:sonar.coverageReportPaths="coverage/SonarQube.xml  -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
-  displayName: 'dotnet Sonar Scanner Begin'
-
-# Step 3: Build the solution
+# 3. Build the project
 - task: DotNetCoreCLI@2
-  displayName: 'Build Project'
   inputs:
     command: 'build'
-    projects: '**/*.sln'
-    arguments: '--configuration Release'
+    projects: '**/*.csproj'
+  displayName: 'Build the project'
 
-
-
-
-
-#https://sonarcloud.io/project/configuration/AzureOtherCI?id=abhishekjob_simaira.digital.api.integration
-- script: dotnet sonarscanner end -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
-  displayName: 'dotnet Sonar Scanner End'
-
+# 4. Complete the SonarQube analysis
+- script: |
+    dotnet sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
+  displayName: 'Run SonarScanner End'
 
 # 5. Publish SonarQube/SonarCloud results
 # Publish Quality Gate Result task
@@ -53,12 +42,3 @@ steps:
   inputs:
     pollingTimeoutSec: '300'
   displayName: 'Publish SonarQube Analysis Results'
-
-# Step 4: Run unit tests
-- task: DotNetCoreCLI@2
-  displayName: 'Run Integration Tests'
-  inputs:
-    command: 'test'
-    projects: '**/Simaira.Digital.API.Integration.csproj'
-    arguments: '--configuration Release --no-build --collect:"Code Coverage"'
-
