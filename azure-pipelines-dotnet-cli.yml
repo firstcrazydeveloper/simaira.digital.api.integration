@@ -45,5 +45,6 @@ steps:
 
 # Step 5: Run unit tests
 - script: |
-    dotnet test '**/Simaira.Digital.API.Integration.csproj' --configuration Release --no-build --collect:"Code Coverage"
+    cd source
+    dotnet test --configuration Release --no-build --collect:"Code Coverage"
   displayName: 'Run Integration Tests'
