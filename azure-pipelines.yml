@@ -20,19 +20,12 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/*.sln'
-- task: SonarCloudPrepare@3
-  inputs:
-    SonarQube: 'Simaira.Digital.API.Integration.sonarQube'
-    organization: 'abhishekjob'
-    scannerMode: 'dotnet'
-    projectKey: 'abhishekjob_simaira.digital.api.integration'
-    projectName: 'simaira.digital.api.integration'
+
 
 - script: |
     dotnet tool install --global dotnet-sonarscanner
     dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.12
   displayName: 'Install dotnet Sonar Scanner & Report Generator'
-
 
 
 # Step 3: Build the solution
