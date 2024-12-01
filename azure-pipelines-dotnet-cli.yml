@@ -1,0 +1,51 @@
+trigger:
+- main  # Set the branch(es) to trigger the pipeline
+
+pool:
+  vmImage: 'windows-latest'  # Use an agent that supports .NET
+
+variables:
+  SONAR_PROJECT_KEY: 'abhishekjob_simaira.digital.api.integration'
+  SONAR_ORG_KEY: 'abhishekjob'  # Required only for SonarCloud
+  SONAR_URL: 'https://sonarcloud.io'       # Or your SonarQube server URL
+  SONAR_TOKEN: 'fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e'           # Store the token in a secure DevOps variable
+
+
+
+steps:
+# Step 1: Install .NET SDK
+- checkout: self
+  fetchDepth: 0
+- task: UseDotNet@2
+  displayName: 'Install Dotnet'
+  inputs:
+    packageType: 'sdk'
+    version: '8.x'  # Adjust to your .NET version
+
+# Step 2: Restore NuGet packages
+- task: DotNetCoreCLI@2
+  displayName: 'Restore Project'
+  inputs:
+    command: 'restore'
+    projects: '**/*.sln'
+
+
+# 2. Prepare the SonarQube analysis
+- script: |
+    dotnet tool install --global dotnet-sonarscanner
+  displayName: 'Install dotnet Sonar Scanner & Report Generator'
+
+- script: dotnet sonarscanner begin -o:"$(SONAR_ORG_KEY)" -k:"$(SONAR_PROJECT_KEY)" -n:"simaira.digital.api.integration" -d:sonar.host.url="$(SONAR_URL)" -d:sonar.token="$(SONAR_TOKEN)"
+  displayName: 'dotnet Sonar Scanner Begin'
+  
+# 3. Build the project
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+  displayName: 'Build the project'
+
+# 4. Complete the SonarQube analysis
+- script: |
+    dotnet sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
+  displayName: 'Run SonarScanner End'

@@ -1,16 +1,8 @@
 trigger:
-- main  # Set the branch(es) to trigger the pipeline
+- main  # Adjust to your branch name
 
 pool:
-  vmImage: 'windows-latest'  # Use an agent that supports .NET
-
-variables:
-  SONAR_PROJECT_KEY: 'abhishekjob_simaira.digital.api.integration'
-  SONAR_ORG_KEY: 'abhishekjob'  # Required only for SonarCloud
-  SONAR_URL: 'https://sonarcloud.io'       # Or your SonarQube server URL
-  SONAR_TOKEN: 'fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e'           # Store the token in a secure DevOps variable
-
-
+  vmImage: 'windows-latest'  # Use 'ubuntu-latest' for Linux builds
 
 steps:
 # Step 1: Install .NET SDK
@@ -28,24 +20,34 @@ steps:
   inputs:
     command: 'restore'
     projects: '**/*.sln'
+- task: SonarCloudPrepare@3
+  inputs:
+    SonarQube: 'Simaira.Digital.API.Integration.sonarQube'
+    organization: 'abhishekjob'
+    scannerMode: 'dotnet'
+    projectKey: 'abhishekjob_simaira.digital.api.integration'
+    projectName: 'simaira.digital.api.integration'
 
-
-# 2. Prepare the SonarQube analysis
-- script: |
-    dotnet tool install --global dotnet-sonarscanner
-  displayName: 'Install dotnet Sonar Scanner & Report Generator'
-
-- script: dotnet sonarscanner begin -o:"$(SONAR_ORG_KEY)" -k:"$(SONAR_PROJECT_KEY)" -n:"simaira.digital.api.integration" -d:sonar.host.url="$(SONAR_URL)" -d:sonar.token="$(SONAR_TOKEN)"
-  displayName: 'dotnet Sonar Scanner Begin'
-  
-# 3. Build the project
+# Step 3: Build the solution
 - task: DotNetCoreCLI@2
+  displayName: 'Build Project'
   inputs:
     command: 'build'
-    projects: '**/*.csproj'
-  displayName: 'Build the project'
+    projects: '**/*.sln'
+    arguments: '--configuration Release'
 
-# 4. Complete the SonarQube analysis
-- script: |
-    dotnet sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
-  displayName: 'Run SonarScanner End'
+# Run Code Analysis task
+- task: SonarCloudAnalyze@3
+
+# Publish Quality Gate Result task
+- task: SonarCloudPublish@3
+  inputs:
+    pollingTimeoutSec: '300'
+
+# Step 4: Run unit tests
+- task: DotNetCoreCLI@2
+  displayName: 'Run Integration Tests'
+  inputs:
+    command: 'test'
+    projects: '**/Simaira.Digital.API.Integration.csproj'
+    arguments: '--configuration Release --no-build --collect:"Code Coverage"'
