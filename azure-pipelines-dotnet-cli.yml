@@ -18,6 +18,7 @@ steps:
 
 # Step 2: Restore NuGet packages
 - script: |
+    cd source
     dotnet restore
   displayName: 'Restore Project'
 
