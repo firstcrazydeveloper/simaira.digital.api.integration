@@ -49,10 +49,3 @@ steps:
 - script: |
     dotnet sonarscanner end /d:sonar.login="$(SONAR_TOKEN)"
   displayName: 'Run SonarScanner End'
-
-# 5. Publish SonarQube/SonarCloud results
-# Publish Quality Gate Result task
-- task: SonarCloudPublish@3
-  inputs:
-    pollingTimeoutSec: '300'
-  displayName: 'Publish SonarQube Analysis Results'
