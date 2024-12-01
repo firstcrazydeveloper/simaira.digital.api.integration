@@ -49,7 +49,7 @@ steps:
 
 
 #https://sonarcloud.io/project/configuration/AzureOtherCI?id=abhishekjob_simaira.digital.api.integration
-- script: dotnet sonarscanner end -d:sonar.host.url="https://sonarcloud.io" -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
+- script: dotnet sonarscanner end -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
   displayName: 'dotnet Sonar Scanner End'
 
 # Step 4: Run unit tests
