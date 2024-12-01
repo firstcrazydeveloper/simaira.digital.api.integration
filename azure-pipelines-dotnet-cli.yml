@@ -18,7 +18,7 @@ steps:
 
 # Step 2: Restore NuGet packages
 - script: |
-    dotnet restore '**/*.sln'
+    dotnet restore
   displayName: 'Restore Project'
 
 # 2. Prepare the SonarQube analysis

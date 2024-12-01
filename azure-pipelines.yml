@@ -1,5 +1,4 @@
-trigger:
-- main  # Adjust to your branch name
+trigger: none # will disable CI builds entirely
 
 pool:
   vmImage: 'windows-latest'  # Use 'ubuntu-latest' for Linux builds
