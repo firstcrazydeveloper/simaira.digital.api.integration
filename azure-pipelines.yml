@@ -3,6 +3,7 @@ trigger:
 
 pool:
   vmImage: 'windows-latest'  # Use 'ubuntu-latest' for Linux builds
+  
 
 steps:
 # Step 1: Install .NET SDK

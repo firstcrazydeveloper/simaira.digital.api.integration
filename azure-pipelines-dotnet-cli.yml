@@ -4,10 +4,11 @@ pool:
   vmImage: 'windows-latest'  # Use an agent that supports .NET
 
 variables:
+- group: Simaira.Digital.API.Integration #https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=azure-pipelines-ui%2Cyaml
   SONAR_PROJECT_KEY: 'abhishekjob_simaira.digital.api.integration'
   SONAR_ORG_KEY: 'abhishekjob'  # Required only for SonarCloud
   SONAR_URL: 'https://sonarcloud.io'       # Or your SonarQube server URL
-  SONAR_TOKEN: 'fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e'           # Store the token in a secure DevOps variable
+  SONAR_TOKEN:  $(SONAR_TOKEN)          # Store the token in a secure DevOps variable
 
 
 
