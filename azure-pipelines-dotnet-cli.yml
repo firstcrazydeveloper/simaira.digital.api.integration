@@ -33,6 +33,7 @@ steps:
   
 # 3. Build the project
 - script: |
+    cd source
     dotnet build --configuration Release
   displayName: 'Build the project'
 
