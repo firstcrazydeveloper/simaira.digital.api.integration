@@ -21,7 +21,7 @@ steps:
 - script: |
     dotnet tool install --global dotnet-sonarscanner
     dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.12
-    dotnet sonarscanner begin /k:"$(SONAR_PROJECT_KEY)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.login="$(SONAR_TOKEN)" /o:"$(SONAR_ORG_KEY)"
+    dotnet sonarscanner begin /k:"$(SONAR_PROJECT_KEY)" /d:sonar.host.url="$(SONAR_URL)" /d:sonar.token="$(SONAR_TOKEN)" /o:"$(SONAR_ORG_KEY) /-d:sonar.coverageReportPaths="coverage/SonarQube.xml"
   displayName: 'Run SonarScanner Begin'
 
 # 3. Build the project
