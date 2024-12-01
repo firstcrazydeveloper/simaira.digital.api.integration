@@ -28,8 +28,10 @@ steps:
     projectKey: 'abhishekjob_simaira.digital.api.integration'
     projectName: 'simaira.digital.api.integration'
 
-- script: dotnet tool install --global dotnet-sonarscanner
-  displayName: 'Install dotnet Sonar Scanner'
+- script: |
+    dotnet tool install --global dotnet-sonarscanner
+    dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.12
+  displayName: 'Install dotnet Sonar Scanner & Report Generator'
 
 
 
@@ -41,15 +43,14 @@ steps:
     projects: '**/*.sln'
     arguments: '--configuration Release'
 
-- script: dotnet sonarscanner begin -o:"abhishekjob" -k:"abhishekjob_simaira.digital.api.integration" -n:"simaira.digital.api.integration" -d:sonar.host.url="https://sonarcloud.io" -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
+- script: dotnet sonarscanner begin -o:"abhishekjob" -k:"abhishekjob_simaira.digital.api.integration" -n:"simaira.digital.api.integration" -d:sonar.host.url="https://sonarcloud.io" -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e -d:sonar.coverageReportPaths="coverage/SonarQube.xml"
   displayName: 'dotnet Sonar Scanner Begin'
-# Run Code Analysis task
-#- task: SonarCloudAnalyze@3
 
-# Publish Quality Gate Result task
-- task: SonarCloudPublish@3
-  inputs:
-    pollingTimeoutSec: '300'
+
+
+#https://sonarcloud.io/project/configuration/AzureOtherCI?id=abhishekjob_simaira.digital.api.integration
+- script: dotnet sonarscanner end /d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
+  displayName: 'dotnet Sonar Scanner End'
 
 # Step 4: Run unit tests
 - task: DotNetCoreCLI@2
@@ -59,6 +60,3 @@ steps:
     projects: '**/Simaira.Digital.API.Integration.csproj'
     arguments: '--configuration Release --no-build --collect:"Code Coverage"'
 
-#https://sonarcloud.io/project/configuration/AzureOtherCI?id=abhishekjob_simaira.digital.api.integration
-- script: dotnet sonarscanner end /d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
-  displayName: 'dotnet Sonar Scanner End'
