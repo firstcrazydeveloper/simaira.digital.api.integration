@@ -17,26 +17,22 @@ steps:
     version: '8.x'  # Adjust to your .NET version
 
 # Step 2: Restore NuGet packages
-- task: DotNetCoreCLI@2
+- script: |
+    dotnet restore '**/*.sln'
   displayName: 'Restore Project'
-  inputs:
-    command: 'restore'
-    projects: '**/*.sln'
-
 
 # 2. Prepare the SonarQube analysis
 - script: |
     dotnet tool install --global dotnet-sonarscanner
   displayName: 'Install dotnet Sonar Scanner & Report Generator'
 
-- script: dotnet sonarscanner begin -o:"$(SONAR_ORG_KEY)" -k:"$(SONAR_PROJECT_KEY)" -n:"simaira.digital.api.integration" -d:sonar.host.url="$(SONAR_URL)" -d:sonar.token="$(SONAR_TOKEN)"
+- script: |
+    dotnet sonarscanner begin -o:"$(SONAR_ORG_KEY)" -k:"$(SONAR_PROJECT_KEY)" -n:"simaira.digital.api.integration" -d:sonar.host.url="$(SONAR_URL)" -d:sonar.token="$(SONAR_TOKEN)"
   displayName: 'dotnet Sonar Scanner Begin'
   
 # 3. Build the project
-- task: DotNetCoreCLI@2
-  inputs:
-    command: 'build'
-    projects: '**/*.csproj'
+- script: |
+    dotnet build --configuration Release
   displayName: 'Build the project'
 
 # 4. Complete the SonarQube analysis
