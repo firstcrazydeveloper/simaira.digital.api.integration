@@ -15,7 +15,7 @@ steps:
 - task: UseDotNet@2
   inputs:
     packageType: 'global'
-    version: '7.x'
+    version: '8.x'
   displayName: 'Install dotnet-sonarscanner'
 
 # 2. Prepare the SonarQube analysis
