@@ -43,7 +43,7 @@ steps:
     projects: '**/*.sln'
     arguments: '--configuration Release'
 
-- script: dotnet sonarscanner begin -o:"abhishekjob" -k:"abhishekjob_simaira.digital.api.integration" -n:"simaira.digital.api.integration" -d:sonar.host.url="https://sonarcloud.io" -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e -d:sonar.coverageReportPaths="coverage/SonarQube.xml"
+- script: dotnet sonarscanner begin -o:"abhishekjob" -k:"abhishekjob_simaira.digital.api.integration" -n:"simaira.digital.api.integration" -d:sonar.host.url="https://sonarcloud.io" -d:sonar.coverageReportPaths="coverage/SonarQube.xml  -d:sonar.token="fcd8ae3cc9a8181eca5ea1b81973570c3bf7a66e"
   displayName: 'dotnet Sonar Scanner Begin'
 
 
