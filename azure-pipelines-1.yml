@@ -14,16 +14,37 @@ stages:
   displayName: Deploy to development
   trigger: manual
   jobs:
-  - job: DeployJob
-    steps:
-    - script: echo 'hello, world Development'
-      displayName: 'Run script'
+  - deployment: DeployJob
+    environment: Dev
+    strategy:
+      runOnce:
+       deploy:         
+         steps:
+         - script: echo 'hello, world Development'
+           displayName: 'Run script'
 
-- stage: production
-  displayName: Deploy to production
+- stage: Stage
+  displayName: Deploy to Stage
   trigger: manual
   jobs:
-  - job: DeployJob
-    steps:
-    - script: echo 'hello, world Production'
-      displayName: 'Run script'
+  - deployment: DeployJob
+    environment: Stage
+    strategy:
+      runOnce:
+       deploy:         
+         steps:
+         - script: echo 'hello, world Stage'
+           displayName: 'Run script'
+
+- stage: Production
+  displayName: Deploy to Production
+  trigger: manual
+  jobs:
+  - deployment: DeployJob
+    environment: Prod
+    strategy:
+      runOnce:
+       deploy:         
+         steps:
+         - script: echo 'hello, world Production'
+           displayName: 'Run script'
