@@ -1,0 +1,64 @@
+trigger: none  # Disable CI triggers; we'll use schedules instead
+
+schedules:
+- cron: "0 6 * * 1-5"  # First schedule: Every weekday at 6 AM UTC
+  displayName: "Weekday Morning Schedule"
+  branches:
+    include:
+    - main
+- cron: "0 18 * * 1-5"  # Second schedule: Every weekday at 6 PM UTC
+  displayName: "Weekday Evening Schedule"
+  branches:
+    include:
+    - main
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+# Stage 1
+- stage: Stage1
+  displayName: "Stage 1: Preparation"
+  jobs:
+  - job: PreparationJob
+    steps:
+    - script: echo "Task 1 of Stage 1 Setup environment"
+      displayName: "Setup Environment"
+    - script: echo "Task 2 of Stage 1 Validate Configuration"
+      displayName: "Validate Configuration"
+
+# Stage 2
+- stage: Stage2
+  displayName: "Stage 2: Build"
+  dependsOn: Stage1
+  jobs:
+  - job: BuildJob
+    steps:
+    - script: echo "Task 1 of Stage 2 Compile Source Code"
+      displayName: "Compile Source Code"
+    - script: echo "Task 2 of Stage 2 Run Unit Tests"
+      displayName: "Run Unit Tests"
+
+# Stage 3
+- stage: Stage3
+  displayName: "Stage 3: Deployment"
+  dependsOn: Stage2
+  jobs:
+  - job: DeploymentJob
+    steps:
+    - script: echo "Task 1 of Stage 3 Deploy to Staging"
+      displayName: "Deploy to Staging"
+    - script: echo "Task 2 of Stage 3 Run Post-Deployment Checks"
+      displayName: "Run Post-Deployment Checks"
+
+# Stage 4
+- stage: Stage4
+  displayName: "Stage 4: Finalization"
+  dependsOn: Stage3
+  jobs:
+  - job: FinalizationJob
+    steps:
+    - script: echo "Task 1 of Stage 4 Generate Reports"
+      displayName: "Generate Reports"
+    - script: echo "Task 2 of Stage 4 Notify Stakeholders"
+      displayName: "Notify Stakeholders"
